@@ -1,0 +1,112 @@
+# Sentinel AI Configuration
+project:
+  name: "sentinel-ai"
+  version: "0.1.0"
+  description: "Autonomous MLOps Guardian System"
+
+# Google Cloud Platform Configuration
+gcp:
+  project_id: "mdepew-assets"
+  region: "us-central1"
+  zone: "us-central1-a"
+  
+  # Vertex AI Configuration
+  vertex_ai:
+    location: "us-central1"
+    staging_bucket: "mdepew-assets-sentinel-staging"
+    
+  # BigQuery Configuration
+  bigquery:
+    dataset_id: "sentinel_ai"
+    location: "US"
+    
+  # Pub/Sub Configuration
+  pubsub:
+    topic_prefix: "sentinel-ai"
+    subscription_prefix: "sentinel-ai-sub"
+
+# Agent Configuration
+agents:
+  conductor:
+    name: "ConductorAgent"
+    max_concurrent_incidents: 10
+    incident_timeout_minutes: 60
+    memory_vector_dimensions: 768
+    
+  drift_detection:
+    name: "DriftDetectionAgent"
+    monitoring_interval_minutes: 15
+    drift_threshold: 0.1
+    anomaly_threshold: 2.0
+    
+  diagnostic:
+    name: "DiagnosticAgent"
+    max_diagnosis_attempts: 3
+    confidence_threshold: 0.8
+    
+  remediation:
+    name: "RemediationAgent"
+    max_remediation_plans: 5
+    plan_timeout_minutes: 30
+    
+  economist:
+    name: "EconomistAgent"
+    cost_benefit_threshold: 1.2
+    business_impact_weight: 0.7
+    
+  verification:
+    name: "VerificationAgent"
+    rollout_strategy: "canary"
+    canary_percentage: 10
+    verification_timeout_minutes: 45
+    
+  reporting:
+    name: "ReportingAgent"
+    report_format: "markdown"
+    include_technical_details: true
+
+# Governance Configuration
+governance:
+  autonomy_levels:
+    report_only: 0
+    supervised_execution: 1
+    fully_autonomous: 2
+    
+  default_autonomy_level: 1
+  
+  human_approval_required:
+    - high_cost_operations
+    - production_model_replacement
+    - data_pipeline_changes
+    
+  cost_thresholds:
+    low: 100.0
+    medium: 500.0
+    high: 1000.0
+
+# Logging Configuration
+logging:
+  level: "INFO"
+  format: "json"
+  handlers:
+    - console
+    - file
+  file_path: "logs/sentinel-ai.log"
+  
+# Monitoring Configuration
+monitoring:
+  prometheus:
+    enabled: true
+    port: 8000
+    metrics_path: "/metrics"
+    
+  health_check:
+    enabled: true
+    port: 8080
+    path: "/health"
+
+# Development Configuration
+development:
+  debug: false
+  mock_services: false
+  test_mode: false
