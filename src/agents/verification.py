@@ -611,7 +611,7 @@ class VerificationAgent(BaseAgent):
 
         # Add execution action to incident
         action = AgentAction(
-            agent_name="VerificationAgent",
+            agent_id="VerificationAgent",
             action_type="execute_remediation",
             timestamp=datetime.now(),
             input_data={

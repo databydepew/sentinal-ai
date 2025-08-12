@@ -9,6 +9,7 @@ gcp:
   project_id: "mdepew-assets"
   region: "us-central1"
   zone: "us-central1-a"
+  use_application_default_credentials: true
   
   # Vertex AI Configuration
   vertex_ai:

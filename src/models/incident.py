@@ -133,6 +133,13 @@ class Incident:
     metadata: Dict[str, Any] = field(default_factory=dict)
     tags: List[str] = field(default_factory=list)
     
+    def update_status(self, new_status: IncidentStatus) -> None:
+        """Update the incident status"""
+        self.status = new_status
+        self.updated_at = datetime.now()
+        if new_status == IncidentStatus.RESOLVED:
+            self.resolved_at = datetime.now()
+    
     def add_action(self, action: AgentAction) -> None:
         """Add an action to the incident"""
         action.incident_id = self.incident_id

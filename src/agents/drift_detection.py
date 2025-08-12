@@ -1,11 +1,12 @@
 from typing import Dict, List, Optional, Any
 from datetime import datetime, timedelta
+
 import json
 import uuid
 import logging
 import asyncio
 
-from src.models.incident import Incident, AgentAction
+from models.incident import Incident, AgentAction, ActionType
 from src.services.gemini_client import GeminiClient
 from src.agents.base_agent import BaseAgent, AgentCapability
 
@@ -72,12 +73,10 @@ class DriftDetectionAgent(BaseAgent):
         """
         # Create drift analysis action
         action = AgentAction(
-            agent_name="DriftDetectionAgent",
-            action_type="analyze_drift",
-            timestamp=datetime.now(),
-            input_data={"incident_id": incident.incident_id},
-            output_data={},
-            success=False,
+            agent_id=self.agent_id,
+            action_type=ActionType.ANALYZE,
+            incident_id=incident.id,
+            details=f"Analyzing drift for {incident.type.value} incident"
         )
 
         try:

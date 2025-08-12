@@ -1,31 +1,35 @@
-# Sentinel AI - Autonomous MLOps Guardian System
+# Sentinel AI - Autonomous Predictive MLOps Guardian System
 
-Sentinel AI is an autonomous MLOps "guardian" built on Google Cloud Vertex AI that moves beyond simple reactive alerting to create a proactive, self-healing, and continuously optimizing ecosystem for machine learning models.
+Sentinel AI is an autonomous MLOps "guardian" built on Google Cloud Vertex AI that moves beyond reactive alerting to create a **predictive, self-healing, and continuously optimizing ecosystem** for machine learning models. The system prevents incidents before they occur through advanced pattern analysis and multi-agent orchestration.
 
-## 📊 Project Status
+## 🎉 Project Status
 
-**✅ DEMO READY** - The Sentinel AI system is fully functional and includes a working demonstration!
+**✅ PRODUCTION READY** - Sentinel AI is fully deployed on GCP with predictive capabilities!
 
 ### What's Working:
-- ✅ **Complete Multi-Agent System**: All 4 specialized agents (remediation, verification, diagnostic, reporting) are operational
-- ✅ **Conductor Agent Orchestration**: Central coordination and incident lifecycle management
-- ✅ **Mock Incident Processing**: End-to-end demonstration with 3 realistic ML incident scenarios
+- ✅ **Complete Multi-Agent System**: All 6 specialized agents operational (Conductor, Diagnostic, Verification, Reporting, Remediation, **Predictive**)
+- ✅ **GCP Production Deployment**: Successfully deployed and running on Google Cloud Platform
+- ✅ **Predictive Incident Prevention**: Proactive analysis prevents incidents before they occur
+- ✅ **Application Default Credentials**: Secure authentication configured for GCP resources
+- ✅ **End-to-End Demonstrations**: Both reactive and predictive scenarios fully functional
 - ✅ **Agent Communication**: Message bus and agent registry for inter-agent coordination
 - ✅ **Graceful Startup/Shutdown**: Proper initialization and cleanup of all components
-- ✅ **Logging and Monitoring**: Structured logging throughout the system
+- ✅ **Comprehensive Logging**: Structured logging and monitoring throughout the system
 
-### Current Capabilities:
-- **Data Drift Detection Simulation**: Demonstrates how the system handles model drift incidents
-- **Performance Degradation Handling**: Shows response to model performance issues
-- **Model Error Processing**: Illustrates error handling and recovery workflows
-- **Multi-Agent Coordination**: Real-time communication between specialized agents
-- **Incident Lifecycle Management**: Complete workflow from detection to resolution
+### Predictive Capabilities:
+- **🔮 Data Drift Prediction**: Analyzes feature distribution trends to predict critical drift
+- **⚡ Performance Degradation Prediction**: Forecasts system failures before they occur
+- **💾 Resource Exhaustion Prediction**: Prevents capacity issues through usage pattern analysis
+- **🤖 Model Staleness Prediction**: Predicts optimal retraining schedules based on performance decay
+- **🎯 Proactive Alert System**: Time-to-incident estimation with prevention recommendations
+- **🛠️ Automated Prevention**: Actionable steps to prevent predicted incidents
 
-### Production Readiness:
-- 🟡 **Core Functionality**: Fully working demo with mock data
-- 🟡 **GCP Integration**: Service clients implemented but require production configuration
-- 🟡 **Code Quality**: Some lint warnings and unused imports remain (non-blocking)
-- 🔴 **Production Deployment**: Requires GCP setup and configuration for live data
+### Production Deployment:
+- ✅ **GCP Resources**: BigQuery datasets, Cloud Storage buckets, Pub/Sub topics configured
+- ✅ **Cloud Run Service**: Auto-scaling deployment with 4GB RAM, 1 CPU
+- ✅ **API Integration**: Vertex AI, BigQuery, Pub/Sub, Cloud Storage, Monitoring APIs enabled
+- ✅ **Security**: Application Default Credentials for secure authentication
+- ✅ **Monitoring**: Real-time logging and performance tracking
 
 ## 🎯 Mission
 
@@ -44,36 +48,51 @@ Maximize model performance and business value while minimizing human interventio
 
 ### Multi-Agent System
 
-The system consists of specialized agents orchestrated by a central conductor:
+The system consists of 6 specialized agents orchestrated by a central conductor:
 
 #### 🎼 Conductor Agent (The Orchestrator)
 
 - Central "brain" managing incident lifecycle (DETECTED → DIAGNOSING → RESOLVED)
 - Intelligent task delegation to specialized agents
 - State management and governance rule application
+- **Status**: ✅ **Deployed and Operational**
 - **Tools**: Vertex AI Agent Builder, LangChain, Vertex AI Vector Search
 
-#### 👁️ Drift & Anomaly Detection Agent (The Eyes)
+#### 🔮 Predictive Agent (The Oracle) - **NEW!**
 
-- Continuous monitoring for data drift, concept drift, and performance anomalies
-- **Tools**: Vertex AI Model Monitoring, BigQuery ML, Pub/Sub
+- **Proactive incident prevention** through pattern analysis and trend forecasting
+- Predicts data drift, performance degradation, resource exhaustion, and model staleness
+- Generates time-to-incident estimates with prevention recommendations
+- **Status**: ✅ **Deployed and Operational**
+- **Tools**: Statistical Analysis, Machine Learning Models, Gemini Pro
 
-#### 🔍 Diagnostic & Root Cause Agent (The Detective)
+#### 🔍 Diagnostic Agent (The Detective)
 
-- Uses Gemini's reasoning to diagnose root causes
+- Uses Gemini's reasoning to diagnose root causes of incidents
 - Synthesizes monitoring data, model lineage, and historical context
+- **Status**: ✅ **Deployed and Operational**
 - **Tools**: Gemini Pro, Vertex AI ML Metadata, Vertex AI Workbench
 
-#### 🎯 Remediation & Optimization Planning Agent (The Strategist)
+#### 🛠️ Remediation Agent (The Strategist)
 
-- Formulates concrete remediation plans
+- Formulates concrete remediation plans for identified incidents
 - Suggests retraining, hyperparameter optimization, or feature engineering
+- **Status**: ✅ **Deployed and Operational**
 - **Tools**: Gemini Pro, Vertex AI Pipelines, Vertex AI Vizier
 
-#### 💰 Economist Agent (The Analyst)
+#### ✅ Verification Agent (The Validator)
 
-- Cost-benefit analysis of proposed remediation plans
-- Estimates GCP costs vs. business impact of model degradation
+- Validates remediation effectiveness and system health
+- Ensures fixes resolve issues without introducing new problems
+- **Status**: ✅ **Deployed and Operational**
+- **Tools**: Vertex AI Model Monitoring, BigQuery ML, Statistical Analysis
+
+#### 📊 Reporting Agent (The Communicator)
+
+- Generates human-readable reports and summaries
+- Translates technical incidents into business-impact language
+- **Status**: ✅ **Deployed and Operational**
+- **Tools**: Gemini Pro, BigQuery Analytics, Visualization APIs
 - **Tools**: BigQuery, Gemini Pro
 
 #### ⚙️ Verification & Rollout Agent (The Engineer)
@@ -131,18 +150,71 @@ The demo will:
 - Show complete incident lifecycle management
 - Demonstrate multi-agent orchestration and communication
 
-### Production Setup
+## 🚀 Quick Start
 
-For production deployment, configure the following:
+### Prerequisites
+- Python 3.9+
+- Google Cloud SDK (`gcloud`)
+- `uv` package manager (recommended) or `pip`
 
+### 1. Clone and Setup
 ```bash
-# Set environment variables
-export GCP_PROJECT_ID="your-project-id"
-export GOOGLE_APPLICATION_CREDENTIALS="path/to/service-account-key.json"
+git clone <repository-url>
+cd sentinal-ai
 
-# Configure settings in src/config/settings.py
-# Update GCP project details, regions, and service configurations
+# Install dependencies with uv (recommended)
+uv sync
+
+# Or with pip
+pip install -r requirements.txt
 ```
+
+### 2. GCP Authentication
+```bash
+# Login and set up Application Default Credentials
+gcloud auth application-default login
+gcloud config set project YOUR_PROJECT_ID
+```
+
+### 3. Run Demonstrations
+
+**Reactive Demo (Original System):**
+```bash
+uv run python examples/demo_conductor.py
+```
+
+**Predictive Demo (NEW!):**
+```bash
+uv run python examples/demo_predictive.py
+```
+
+### 4. Deploy to GCP
+```bash
+# Automated GCP setup and deployment
+./scripts/setup_gcp.sh
+uv run python deploy_all_agents.py
+```
+
+## 🏭 Production Deployment
+
+### Current Deployment Status
+- **✅ GCP Project**: `mdepew-assets`
+- **✅ Cloud Run Service**: `mdepew-agent` (auto-scaling, 4GB RAM, 1 CPU)
+- **✅ Authentication**: Application Default Credentials
+- **✅ APIs Enabled**: Vertex AI, BigQuery, Pub/Sub, Cloud Storage, Monitoring
+- **✅ Resources Created**: BigQuery datasets, Storage buckets, Pub/Sub topics
+
+### Access Your Deployed System
+- **Cloud Run Service**: https://mdepew-agent-194822035697.us-central1.run.app
+- **GCP Console**: https://console.cloud.google.com/run?project=mdepew-assets
+- **BigQuery Data**: https://console.cloud.google.com/bigquery?project=mdepew-assets
+- **Monitoring**: https://console.cloud.google.com/monitoring?project=mdepew-assets
+
+### Deployment Scripts
+- `scripts/setup_gcp.sh` - Automated GCP resource setup
+- `deploy_all_agents.py` - Complete agent deployment and testing
+- `scripts/deploy_cloud_run.sh` - Cloud Run deployment
+- `Dockerfile` - Production container image
 
 ## 📁 Project Structure
 

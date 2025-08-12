@@ -1,0 +1,133 @@
+{
+  "deployment_id": "7b36b92a-6d60-4f5e-88d0-b85dd4dfe6dc",
+  "timestamp": "2025-08-10T23:44:46.434548",
+  "status": "initialized",
+  "agents": {
+    "conductor": {
+      "status": "deployed",
+      "agent_id": "4f0e0b97-0c1d-4e3d-ad74-222ed76dd435",
+      "timestamp": "2025-08-10T23:45:00.121799"
+    },
+    "diagnostic": {
+      "status": "deployed",
+      "agent_id": "65f93a8c-8580-47f0-812d-eb56214f3ae3",
+      "timestamp": "2025-08-10T23:45:00.121841"
+    }
+  },
+  "tests": {
+    "error": "'RemediationAgent' object has no attribute 'state'"
+  },
+  "demos": {
+    "data_drift": {
+      "status": "completed",
+      "incident_id": "7939b0ae-2040-4289-bf54-5eb807d4adc7",
+      "result": "7939b0ae-2040-4289-bf54-5eb807d4adc7"
+    },
+    "performance_degradation": {
+      "status": "completed",
+      "incident_id": "db4a83e9-ff8d-4649-ab0e-8ba618a0de45",
+      "result": "db4a83e9-ff8d-4649-ab0e-8ba618a0de45"
+    },
+    "system_alert": {
+      "status": "completed",
+      "incident_id": "a61bdf02-2ab7-4331-b41d-ead274062f1f",
+      "result": "a61bdf02-2ab7-4331-b41d-ead274062f1f"
+    }
+  },
+  "gcp_resources": {
+    "project_id": "mdepew-assets",
+    "apis_enabled": [
+      "aiplatform.googleapis.com",
+      "bigquery.googleapis.com",
+      "cloudbuild.googleapis.com",
+      "run.googleapis.com",
+      "secretmanager.googleapis.com",
+      "pubsub.googleapis.com",
+      "monitoring.googleapis.com",
+      "logging.googleapis.com"
+    ],
+    "datasets_created": [
+      "sentinel_ai_incidents",
+      "sentinel_ai_metrics",
+      "sentinel_ai_models"
+    ]
+  },
+  "config": {
+    "agents": {
+      "conductor": {
+        "max_concurrent_incidents": 10,
+        "incident_timeout_minutes": 120
+      },
+      "drift_detection": {
+        "monitoring_interval_minutes": 30,
+        "drift_threshold": 0.1,
+        "anomaly_threshold": 2.0
+      },
+      "diagnostic": {
+        "max_diagnosis_attempts": 3,
+        "confidence_threshold": 0.8
+      },
+      "remediation": {
+        "max_remediation_plans": 5,
+        "plan_timeout_minutes": 30,
+        "task_timeout_seconds": 1800
+      },
+      "economist": {
+        "cost_benefit_threshold": 1.2,
+        "business_impact_weight": 0.7,
+        "max_concurrent_tasks": 2,
+        "task_timeout_seconds": 600
+      },
+      "verification": {
+        "rollout_strategy": "canary",
+        "canary_percentage": 10,
+        "verification_timeout_minutes": 45,
+        "max_concurrent_tasks": 2,
+        "task_timeout_seconds": 1200
+      },
+      "reporting": {
+        "report_format": "markdown",
+        "include_technical_details": true,
+        "max_concurrent_tasks": 3,
+        "task_timeout_seconds": 300
+      }
+    },
+    "logging": {
+      "level": "INFO",
+      "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+      "file": null
+    }
+  },
+  "summary": {
+    "deployment_id": "7b36b92a-6d60-4f5e-88d0-b85dd4dfe6dc",
+    "timestamp": "2025-08-10T23:45:00.122361",
+    "status": "completed",
+    "agents_deployed": 2,
+    "tests_passed": 0,
+    "demos_completed": 3,
+    "gcp_resources": {
+      "project_id": "mdepew-assets",
+      "apis_enabled": [
+        "aiplatform.googleapis.com",
+        "bigquery.googleapis.com",
+        "cloudbuild.googleapis.com",
+        "run.googleapis.com",
+        "secretmanager.googleapis.com",
+        "pubsub.googleapis.com",
+        "monitoring.googleapis.com",
+        "logging.googleapis.com"
+      ],
+      "datasets_created": [
+        "sentinel_ai_incidents",
+        "sentinel_ai_metrics",
+        "sentinel_ai_models"
+      ]
+    },
+    "next_steps": [
+      "Configure production monitoring and alerting",
+      "Set up CI/CD pipeline for agent updates",
+      "Configure real-time data sources",
+      "Set up production incident management workflows"
+    ]
+  }
+}

@@ -55,7 +55,7 @@ class ReportingAgent(BaseAgent):
         """
         # Create reporting action
         action = AgentAction(
-            agent_name="ReportingAgent",
+            agent_id="ReportingAgent",
             action_type="generate_report",
             timestamp=datetime.now(),
             input_data={"incident_id": incident.incident_id},

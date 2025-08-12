@@ -69,18 +69,18 @@ async def main():
         logger.error(f"Demonstration failed: {e}")
         raise
     
-    finally:
-        # Cleanup
-        logger.info("Cleaning up...")
-        try:
-            if 'conductor' in locals():
-                await conductor.shutdown()
-            if 'agent_registry' in locals():
-                await agent_registry.stop()
-            if 'message_bus' in locals():
-                await message_bus.stop()
-        except Exception as e:
-            logger.error(f"Cleanup error: {e}")
+    # finally:
+    #     # Cleanup
+    #     logger.info("Cleaning up...")
+    #     try:
+    #         if 'conductor' in locals():
+    #             await conductor.shutdown()
+    #         if 'agent_registry' in locals():
+    #             await agent_registry.stop()
+    #         if 'message_bus' in locals():
+    #             await message_bus.stop()
+    #     except Exception as e:
+    #         logger.error(f"Cleanup error: {e}")
 
 
 async def run_demonstration_scenarios(conductor: ConductorAgent, logger):
@@ -123,13 +123,13 @@ async def run_data_drift_scenario(conductor: ConductorAgent, logger):
     
     # Process incident through conductor
     try:
-        result = await conductor.process_incident(incident)
+        incident_id = await conductor.process_incident(incident)
         
         logger.info("Data drift scenario completed successfully")
-        logger.info(f"Incident status: {result.get('incident_status', 'unknown')}")
+        logger.info(f"Processed incident ID: {incident_id}")
         
         # Display results
-        display_scenario_results("Data Drift", incident, result, logger)
+        display_scenario_results("Data Drift", incident, incident_id, logger)
         
     except Exception as e:
         logger.error(f"Data drift scenario failed: {e}")
@@ -152,13 +152,13 @@ async def run_performance_degradation_scenario(conductor: ConductorAgent, logger
     
     # Process incident through conductor
     try:
-        result = await conductor.process_incident(incident)
+        incident_id = await conductor.process_incident(incident)
         
         logger.info("Performance degradation scenario completed successfully")
-        logger.info(f"Incident status: {result.get('incident_status', 'unknown')}")
+        logger.info(f"Processed incident ID: {incident_id}")
         
         # Display results
-        display_scenario_results("Performance Degradation", incident, result, logger)
+        display_scenario_results("Performance Degradation", incident, incident_id, logger)
         
     except Exception as e:
         logger.error(f"Performance degradation scenario failed: {e}")
@@ -181,13 +181,13 @@ async def run_model_error_scenario(conductor: ConductorAgent, logger):
     
     # Process incident through conductor
     try:
-        result = await conductor.process_incident(incident)
+        incident_id = await conductor.process_incident(incident)
         
         logger.info("Model error scenario completed successfully")
-        logger.info(f"Incident status: {result.get('incident_status', 'unknown')}")
+        logger.info(f"Processed incident ID: {incident_id}")
         
         # Display results
-        display_scenario_results("Model Error", incident, result, logger)
+        display_scenario_results("Model Error", incident, incident_id, logger)
         
     except Exception as e:
         logger.error(f"Model error scenario failed: {e}")

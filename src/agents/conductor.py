@@ -4,7 +4,7 @@ import uuid
 import asyncio
 from datetime import datetime
 
-from models.incident import Incident, AgentAction
+from models.incident import Incident, AgentAction, ActionType
 from services.gemini_client import GeminiClient
 from agents.remediation import RemediationAgent
 from agents.verification import VerificationAgent
@@ -47,6 +47,9 @@ class ConductorAgent:
         # Communication components (will be set by demo)
         self.message_bus = None
         self.agent_registry = None
+        
+        # Add agent_id property for compatibility
+        self.agent_id = self.state.agent_id
         
         logger.info("ConductorAgent initialized")
 
@@ -167,9 +170,11 @@ class ConductorAgent:
         logger.info(f"Generating incident report for: {incident.incident_id}")
 
         action = AgentAction(
-            agent_name="ConductorAgent",
-            action_type="generate_report",
-            timestamp=datetime.now(),
+            agent_id="ConductorAgent",
+            action_type=ActionType.NOTIFICATION,
+            name="generate_report",
+            description="Generate incident report",
+            incident_id=incident.incident_id,
             input_data={"incident_id": incident.incident_id},
             output_data={},
             success=False,
@@ -282,12 +287,14 @@ class ConductorAgent:
 
         # Create initial action
         action = AgentAction(
-            agent_name="ConductorAgent",
-            action_type="receive_incident",
-            timestamp=datetime.now(),
+            agent_id="ConductorAgent",
+            action_type=ActionType.DIAGNOSTIC,
+            name="diagnose_incident",
+            description="Diagnose incident",
+            incident_id=incident.incident_id,
             input_data={"incident_id": incident.incident_id},
             output_data={},
-            success=True,
+            success=False,
         )
         incident.add_action(action)
 
@@ -309,12 +316,14 @@ class ConductorAgent:
 
         # Create diagnostic action
         action = AgentAction(
-            agent_name="ConductorAgent",
-            action_type="start_diagnosis",
-            timestamp=datetime.now(),
+            agent_id="ConductorAgent",
+            action_type=ActionType.DIAGNOSTIC,
+            name="diagnose_incident",
+            description="Diagnose incident",
+            incident_id=incident.incident_id,
             input_data={"incident_id": incident.incident_id},
             output_data={},
-            success=True,
+            success=False,
         )
         incident.add_action(action)
 
@@ -346,12 +355,14 @@ class ConductorAgent:
 
         # Create remediation planning action
         action = AgentAction(
-            agent_name="ConductorAgent",
-            action_type="start_remediation_planning",
-            timestamp=datetime.now(),
+            agent_id="ConductorAgent",
+            action_type=ActionType.REMEDIATION,
+            name="generate_remediation_plan",
+            description="Generate remediation plan",
+            incident_id=incident.incident_id,
             input_data={"incident_id": incident.incident_id},
             output_data={},
-            success=True,
+            success=False,
         )
         incident.add_action(action)
 
@@ -389,12 +400,14 @@ class ConductorAgent:
 
         # Create remediation execution action
         action = AgentAction(
-            agent_name="ConductorAgent",
-            action_type="start_remediation_execution",
-            timestamp=datetime.now(),
+            agent_id="ConductorAgent",
+            action_type=ActionType.REMEDIATION,
+            name="execute_remediation_plan",
+            description="Execute remediation plan",
+            incident_id=incident.incident_id,
             input_data={"incident_id": incident.incident_id},
             output_data={},
-            success=True,
+            success=False,
         )
         incident.add_action(action)
 
@@ -441,13 +454,14 @@ class ConductorAgent:
 
             # Create approval action
             action = AgentAction(
-                agent_name="ExternalSystem",
-                action_type="approve_remediation",
-                timestamp=datetime.now(),
-                input_data={"incident_id": incident_id, "approver": approver},
-                output_data={},
-                success=True,
+                agent_id=self.agent_id,
+                action_type=ActionType.DIAGNOSE,
+                incident_id=incident.id,
+                details=f"Requesting diagnosis for {incident.type.value} incident"
             )
+            action.input_data={"incident_id": incident_id, "approver": approver}
+            action.output_data={}
+            action.success=True
             incident.add_action(action)
 
             # Execute remediation plan
@@ -475,9 +489,10 @@ class ConductorAgent:
 
             # Create rejection action
             action = AgentAction(
-                agent_name="ExternalSystem",
-                action_type="reject_remediation",
-                timestamp=datetime.now(),
+                agent_id="ExternalSystem",
+                action_type=ActionType.NOTIFICATION,
+                incident_id=incident_id,
+                details=f"Remediation rejected by {rejector}: {reason}",
                 input_data={
                     "incident_id": incident_id,
                     "rejector": rejector,

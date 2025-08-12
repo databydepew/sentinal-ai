@@ -3,7 +3,7 @@ from datetime import datetime
 import json
 import uuid
 
-from models.incident import Incident, DiagnosisResult, AgentAction
+from models.incident import Incident, DiagnosisResult, AgentAction, ActionType
 from services.gemini_client import GeminiClient
 from agents.base_agent import BaseAgent, AgentCapability
 
@@ -51,12 +51,10 @@ class DiagnosticAgent(BaseAgent):
         """
         # Create diagnostic action
         action = AgentAction(
-            agent_name="DiagnosticAgent",
-            action_type="diagnose_incident",
-            timestamp=datetime.now(),
-            input_data={"incident_id": incident.incident_id},
-            output_data={},
-            success=False,
+            agent_id=self.agent_id,
+            action_type=ActionType.DIAGNOSE,
+            incident_id=incident.id,
+            details=f"Diagnostic analysis for {incident.type.value} incident"
         )
 
         try:
