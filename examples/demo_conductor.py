@@ -193,29 +193,25 @@ async def run_model_error_scenario(conductor: ConductorAgent, logger):
         logger.error(f"Model error scenario failed: {e}")
 
 
-def display_scenario_results(scenario_name: str, incident, result: dict, logger):
+def display_scenario_results(scenario_name: str, incident, incident_id: str, logger):
     """Display the results of a scenario"""
     
     logger.info(f"=== {scenario_name} Scenario Results ===")
     logger.info(f"Incident ID: {incident.incident_id}")
-    logger.info(f"Incident Type: {incident.incident_type.value}")
-    logger.info(f"Severity: {incident.severity.value}")
-    logger.info(f"Model: {incident.source_model_name}")
-    logger.info(f"Status: {result.get('incident_status', 'unknown')}")
+    logger.info(f"Incident Type: {incident.incident_type.value if hasattr(incident.incident_type, 'value') else incident.incident_type}")
+    logger.info(f"Severity: {incident.severity.value if hasattr(incident.severity, 'value') else incident.severity}")
+    logger.info(f"Model: {incident.metadata.get('source_model_name', 'unknown')}")
+    logger.info(f"Status: {incident.status.value if hasattr(incident.status, 'value') else incident.status}")
+    
+    # Display affected systems
+    if incident.affected_systems:
+        logger.info(f"Affected Systems: {', '.join(incident.affected_systems)}")
     
     # Display actions taken
-    actions_taken = result.get('actions_taken', [])
-    if actions_taken:
+    if incident.actions:
         logger.info("Actions Taken:")
-        for i, action in enumerate(actions_taken, 1):
-            logger.info(f"  {i}. {action.get('description', 'Unknown action')}")
-    
-    # Display recommendations
-    recommendations = result.get('recommendations', [])
-    if recommendations:
-        logger.info("Recommendations:")
-        for i, rec in enumerate(recommendations, 1):
-            logger.info(f"  {i}. {rec}")
+        for i, action in enumerate(incident.actions, 1):
+            logger.info(f"  {i}. {action.name} - {action.description}")
     
     logger.info("=" * 50)
 
